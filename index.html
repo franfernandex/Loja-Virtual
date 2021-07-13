@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Loja Virtual</title>
+    <!-- Bootstrap -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="Style.css" media="screen" />
+    
+</head>
+
+
+
+<body>
+    <script src="/provador/Scripts/jquery-3.4.1.js"></script>
+
+
+    <div class="container">
+        <h2  class="alert alert-success text-center"><strong>Loja de Roupas</strong> </h2>
+
+
+
+        <!--BLUSA-->
+        <div class="row" id="2">
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <table>
+                        <tr>
+                            <td>
+                                <label>Cor</label>
+                                <select data-bind="options: opcoes, value: corBlusa" id="seletorBlusa" selected="selected"></select>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button data-bind="click: atualizarCarrinho(self.blusaInicial())" class="btn btn-light" id="btnEscolhe">Adicionar ao carrinho</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class=".col-md-6 .col-md-offset-6">
+                <img data-bind="attr : {src: blusaInicial}" id="blusaid" width="300" height="300"/>
+
+                <button data-bind="click: mudar(self.blusaInicial), visible: self.corBlusa() != 'selecionar'" type="button" class="btn btn-default" aria-label="Alinhar na esquerda"><strong> --> </strong></button>
+            </div>
+            
+            
+        </div> <!--row-->
+
+
+
+        <!--CALÇA/SHORT-->
+        <div class="row" id="3">
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <table>
+                        <tr>
+
+                            <td>
+                                <label>Cor</label>
+                                <select data-bind="options: opcoes, value: corCalca" id="seletorCalca"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button data-bind="click: atualizarCarrinho(self.calcaInicial())" class="btn btn-light" id="btnEscolhe">Adicionar ao carrinho</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class=".col-md-6 .col-md-offset-6">
+                <img data-bind="attr : {src: calcaInicial}" id="calcaid" width="300" height="300"/>
+
+                <button data-bind="click: mudar(self.calcaInicial), visible: self.corCalca() != 'selecionar'" type="button" class="btn btn-default" aria-label="Alinhar na esquerda"><strong> --> </strong></button>
+
+            </div>
+        </div> <!--row-->
+
+
+
+        <!--SAPATO-->
+        <div class="row" id="4">
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <table>
+                        <tr>
+
+                            <td>
+                                <label>Cor</label>
+                                <select data-bind="options: opcoes, value: corTenis" id="seletorTenis"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button data-bind="click: atualizarCarrinho(self.tenisInicial())" class="btn btn-light" id="btnEscolhe">Adicionar ao carrinho</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class=".col-md-6 .col-md-offset-6">
+                <img data-bind="attr : {src: tenisInicial}" id="tenisid" width="300" height="300" />
+
+                <button  data-bind="click: mudar(self.tenisInicial), visible: self.corTenis() != 'selecionar'" type="button" class="btn btn-default" aria-label="Alinhar na esquerda"><strong> --> </strong></button>
+
+            </div>
+        </div> <!--row-->
+
+
+
+
+        <div class="row">
+            <button data-bind="click: lookAleatorio" class="btn btn-success" id="final">Escolher Look Aleatorio!</button>
+        </div><!--row-->
+
+
+        <!--Carrinho de Compras-->
+        <h2  class="alert alert-success text-center"><strong>Carrinho de Compras</strong> </h2>
+        <div class="row">
+            <table>
+                <thead > 
+                    <tr>
+                        <th>Item</th>
+                        <th>Nome </th>
+                        <th>Cor</th>
+                        <th>Preco</th>
+                    </tr>
+                </thead>
+                
+                
+                <tbody data-bind='foreach: carrinho'>  
+                    <tr>
+                        <th><img data-bind="attr : {src: item}" width="300" height="300"/></span></th>	
+                        <th><span data-bind='text: nomeItem'></span></th>  
+                        <th><span data-bind='text: cor'></span></th>	
+                        <th><span data-bind='text: preco'></span></th>   
+                        <th> <a data-bind='click: $root.removeItem'>Remover</a></th>
+                    </tr>
+                </tbody> 
+                <tr class="p-3 mb-2 bg-success text-white">
+                    <th>Total:</th>
+                    <th></th>
+                    <th class="text-right">R$</th>
+                    <th><span class="text-center" data-bind="text: total"></span></th>
+                    <th class="alert alert-success text-center"><a  class="alert-link" data-bind="click: limparCarrinho">Limpar Carrinho</a></th>
+                </tr>
+
+            </table>
+        </div>
+        <div class="row">
+            <button data-bind="click: self.alterar()" class="btn btn-success" id="final">Finalizar a Compra</button>
+        </div><!--row-->
+
+
+
+
+        <!--Finalizar a compra-->
+        <div class="row" data-bind="visible: self.inverter() == true">
+            <div class="col-75">
+            <div >
+                <form action="/action_page.php">
+        
+                <div class="row" >
+                    <div class="col-50">
+                    <h3>Endereço de Entrega</h3>
+                    <label><i class="fa fa-user"></i> Nome Completo</label>
+                    <input type="text" data-bind="value: nomeCliente"  placeholder="João M. Silva">
+
+                    <label><i class="fa fa-envelope"></i> Email</label>
+                    <input type="text" data-bind="value: emailCliente"  placeholder="joao@example.com">
+
+                    <label><i class="fa fa-address-card-o"></i> Endereço</label>
+                    <input type="text" data-bind="value: enderecoCliente" placeholder="Rua. Nossa Senhora">
+
+                    <label><i class="fa fa-institution"></i>Cidade</label>
+                    <input type="text" data-bind="value: cidadeCliente" placeholder="Lavras">
+        
+                    </div>
+        
+                    <div class="col-50">
+                    <h3>Pagamento</h3>
+                    <label>Cartões Aceitos</label>
+                    <div>
+                        <select id="cartoes">
+                            <option>Mastercard</option>
+                            <option>Elo</option>
+                            <option>Visa</option>
+                        </select>
+
+                    </div>
+                    
+                    <label >Nome no cartão</label>
+                    <input type="text" data-bind="value: nomeCartao" placeholder="João Motta Silva">
+                    <label>Numero do cartão</label>
+                    <input type="text" data-bind="value: numCartao" placeholder="1111-2222-3333-4444">
+                   
+        
+                    <div class="row">
+                        <div class="col-50">
+                        <label >Ano de Validade</label>
+                        <input type="text" data-bind="value: anoCartao" placeholder="2025">
+                        </div>
+                        <div class="col-50">
+                        <label >CVV</label>
+                        <input type="text" data-bind="value: cvvCartao" placeholder="352">
+                        </div>
+                    </div>
+                    </div>
+        
+                </div>
+                <button data-bind="click: self.compraFinal" class="btn btn-success" id="final">Confirmar</button>
+                </form>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+            <button id="final" data-bind="click: self.alterar2()">Listar Pedidos</button>
+        </div>
+        <div class="row">
+            <table data-bind="visible: self.inverter2() == true">
+                <tbody data-bind='foreach: pedidos'>  
+                    <tr>	
+			            <th><span data-bind='text: nomeCliente'></span></th>   
+			            <th><span data-bind='text: emailCliente'></span></th>   
+			            <th><span data-bind='text: enderecoCliente'></span></th>   
+			            <th><span data-bind='text: cidadeCliente'></span></th> 
+                        <th><span data-bind="text: pedidoCliente"></span></th>
+                        <th><span data-bind='text: total'></span></th>   
+                    </tr>
+                </tbody> 
+            </table>
+        </div>
+      
+        
+
+
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-debug.js"></script>
+    <script src="usuario.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+
+</body>
+</html>

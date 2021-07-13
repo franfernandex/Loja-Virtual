@@ -1,0 +1,15 @@
+.a {
+    align-items: rigth;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    text-align: left;
+    padding: 8px;
+      border: 1px solid #dddddd;
+}
